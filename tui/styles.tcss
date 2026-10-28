@@ -1,0 +1,81 @@
+Screen {
+  align: center middle;
+  overflow: hidden;
+}
+
+.box {
+  border: round $surface;
+  grid-gutter: 1;
+  height: auto;
+  layout: grid;
+  padding: 1 2 2 2;
+  width: 0.8fr;
+}
+
+Button {
+  margin-bottom: 1;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.title {
+  content-align: center middle;
+  color: $accent;
+  text-align: center;
+  width: 100%;
+}
+
+.tag {
+  color: $background;
+  padding: 0 1;
+  width: auto;
+}
+
+.node {
+  background: $background;
+  color: white;
+  padding: 1 0;
+}
+
+.node:hover {
+  background: $panel;
+}
+
+.node Static,
+.node Tag {
+  margin-left: 2;
+}
+
+#game{
+  grid-size: 2 0;
+  grid-columns: 2fr 1fr;
+}
+
+#game_main {
+  align: center middle;
+  hatch: right $panel 5%;
+  layout: grid;
+  grid-size: 5 5;
+  grid-gutter: 2 3;
+  width: 1fr;
+  height: 1fr;
+  layout: grid;
+  padding: 8;
+}
+
+#game_sidebar{
+  width: 1fr;
+}
+
+Node {
+  border: round $primary;
+  align: center middle;
+  min-height: 3;
+}
+
+Node Static{
+  text-align: center;
+  height: 1;
+}

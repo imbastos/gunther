@@ -1,0 +1,13 @@
+AuthScreen {
+    align: center middle;
+}
+
+AuthScreen > Container {
+  height: auto;
+  width: 0.3fr;
+}
+
+AuthScreen > Container > Static {
+  text-align: center;
+  margin-bottom: 2;
+}

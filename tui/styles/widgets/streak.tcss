@@ -1,0 +1,19 @@
+Streak.active{
+  background: $background;
+  background-tint: #f54900 20%;
+  border: round #f54900;
+  color: #f54900;
+}
+
+Streak{
+  background: $background;
+  border: round $surface;
+  color: $text-muted;
+  height: auto;
+  padding: 0 2;
+  width: auto;
+}
+
+Streak Static{
+  width: auto;
+}

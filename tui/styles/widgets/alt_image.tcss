@@ -1,0 +1,16 @@
+AltImage{
+  width: 1fr;
+  height: 1fr;
+}
+
+AltImage Image{
+  width: 1fr;
+  height: 1fr;
+}
+
+AltImage .alt-text{
+  content-align: center middle;
+  height: 1fr;
+  text-align: center;
+  width: 1fr;
+}

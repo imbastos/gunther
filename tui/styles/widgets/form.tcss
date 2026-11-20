@@ -1,0 +1,18 @@
+Form{
+  height: auto;
+}
+
+Form FormField{
+  height: auto;
+}
+
+Form FormField .error{
+  color: $error;
+  height: auto;
+}
+
+Form .submit{
+  background: $primary;
+  margin: 0 1;
+  width: 1fr;
+}

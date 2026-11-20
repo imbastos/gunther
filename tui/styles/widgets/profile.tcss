@@ -1,0 +1,10 @@
+Profile{
+  align: center middle;
+  background: $surface;
+  height: 3;
+  width: 8;
+}
+
+Profile:hover{
+  background-tint: white 10%;
+}

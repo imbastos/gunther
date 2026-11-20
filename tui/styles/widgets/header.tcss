@@ -1,0 +1,10 @@
+Header{
+  layout: horizontal;
+  padding: 1 2;
+  height: 5;
+  width: 100%;
+}
+
+Header Profile{
+  margin-left: 2;
+}

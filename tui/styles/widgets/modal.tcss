@@ -1,0 +1,32 @@
+Modal{
+  background: $surface;
+  border: round $panel;
+  display: none;
+  height: auto;
+  layer: modal;
+  position: absolute;
+  width: 48;
+}
+
+Modal .action{
+  background: $surface;
+  width: 100%;
+  padding: 1 2;
+}
+
+Modal .action:hover{
+  background-tint: white 10%;
+}
+
+Modal .action.caution{
+  color: $error;
+}
+
+Modal .action.caution:hover{
+  background-tint: $error 10%;
+}
+
+ProfileModal {
+  dock: right;
+  offset: -2 5;
+}

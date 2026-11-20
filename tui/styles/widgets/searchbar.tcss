@@ -1,0 +1,21 @@
+Searchbar{
+  height: auto;
+  width: 1fr;
+}
+
+Searchbar Input{
+  background: $background;
+  border: round $surface;
+}
+
+Searchbar Input:focus {
+  border: round $primary;
+}
+
+Searchbar .icon{
+  color: $surface;
+  dock: right;
+  offset: -4 1;
+  position: absolute;
+  width: auto;
+}

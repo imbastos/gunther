@@ -1,0 +1,7 @@
+Title{
+  border-bottom: solid $primary;
+  color: $primary;
+  height: auto;
+  margin-bottom: 1;
+  width: auto;
+}

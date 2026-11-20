@@ -1,0 +1,36 @@
+Sidebar{
+  align: center top;
+  dock: left;
+  height: 100%;
+  width: 32;
+}
+
+Sidebar AltImage{
+  align: center top;
+  height: 3;
+  margin: 1 6 3 6;
+}
+
+Sidebar Vertical{
+  width: 100%;
+  padding: 0 3;
+}
+
+Sidebar Vertical Static{
+  background: $background;
+  border: none;
+  margin-bottom: 1;
+  padding: 1 2;
+  text-align: left;
+  width: 100%;
+}
+
+Sidebar Vertical Static.selected{
+  background: $background;
+  background-tint: white 5%;
+}
+
+
+Sidebar Vertical Static:hover{
+  background-tint: white 10%;
+}

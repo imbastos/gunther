@@ -1,0 +1,409 @@
+Screen {
+    layers: app arrows modal;
+    height: 100%;
+}
+
+Widget {
+    height: auto;
+    width: auto;
+}
+
+Screen .main {
+    background: $background;
+    background-tint: $surface 40%;
+    padding: 1 2 0 3;
+    height: 1fr;
+    width: 1fr;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Tipografia */
+.text-bold {
+    text-style: bold;
+}
+
+.text-italic {
+    text-style: italic;
+}
+
+.text-center {
+    width: 100%;
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+/* Cores de texto */
+.color-primary {
+    color: $primary;
+}
+
+.color-accent {
+    color: $accent;
+}
+
+.color-success {
+    color: $success;
+}
+
+.color-error {
+    color: $error;
+}
+
+.color-muted {
+    color: $text-muted;
+}
+
+/* Fundos e tints */
+.bg-transparent {
+    background: transparent;
+}
+
+.bg-background {
+    background: $background;
+}
+
+.bg-panel {
+    background: $panel;
+}
+
+.bg-surface {
+    background: $surface;
+}
+
+.bg-success {
+    background: $success;
+    color: $background;
+}
+
+.tint-accent {
+    background-tint: $accent 10%;
+}
+
+.tint-surface-40 {
+    background-tint: $surface 40%;
+}
+
+.tint-white-5 {
+    background-tint: white 5%;
+}
+
+.tint-white {
+    background-tint: white 10%;
+}
+
+.hover:hover {
+    background-tint: white 5%;
+}
+
+.hover-tint-white:hover {
+    background-tint: white 10%;
+}
+
+/* Dimensões */
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.w-auto {
+    width: auto;
+}
+
+.h-auto {
+    height: auto;
+}
+
+.w-1--1 {
+    width: 1fr;
+}
+
+.h-1--1 {
+    height: 1fr;
+}
+
+.w-1--3 {
+    width: 0.3fr;
+}
+
+.w-32 {
+    width: 32;
+}
+
+.w-40 {
+    width: 40;
+}
+
+.w-48 {
+    width: 48;
+}
+
+.w-60 {
+    width: 60;
+}
+
+.max-h-16 {
+    max-height: 16;
+}
+
+.h-3 {
+    height: 3;
+}
+
+.h-5 {
+    height: 5;
+}
+
+.h-6 {
+    height: 6;
+}
+
+.h-8 {
+    height: 8;
+}
+
+.h-10 {
+    height: 10;
+}
+
+.square-3 {
+    width: 8;
+    height: 3;
+}
+
+.square-8 {
+    height: 6;
+    width: 14;
+}
+
+.square-8 Image {
+    height: 1fr;
+    width: 1fr;
+}
+
+/* Layout e posicionamento */
+.modal {
+    layer: modal;
+}
+
+.dock-left {
+    dock: left;
+}
+
+.dock-top {
+    dock: top;
+}
+
+.right {
+    dock: right;
+}
+
+.ox--2 {
+    offset-x: -2;
+}
+
+.o-34-4 {
+    offset: 34 4;
+}
+
+.oy-4 {
+    offset-y: 4;
+}
+
+.oy-5 {
+    offset-y: 5;
+}
+
+.horizontal {
+    layout: horizontal;
+}
+
+.vertical {
+    layout: vertical;
+}
+
+.cols-2 {
+    grid-size: 2;
+}
+
+.cols-3 {
+    grid-size: 3;
+}
+
+.gutter-1 {
+    grid-gutter: 1 2;
+}
+
+.overflow-x-hidden {
+    overflow-x: hidden;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
+}
+
+.center {
+    align: center middle;
+}
+
+.align-center-top {
+    align: center top;
+}
+
+.content-center {
+    content-align: center middle;
+}
+
+.center-container {
+    width: 1fr;
+    height: 1fr;
+    align: center middle;
+}
+
+.content-container {
+    height: auto;
+    align: center middle;
+}
+
+.content-alignment {
+    width: 100%;
+    height: auto;
+    align: center middle;
+}
+
+/* Espaçamentos */
+.p-0-1 {
+    padding: 0 1;
+}
+
+.p-0-2 {
+    padding: 0 2;
+}
+
+.p-1 {
+    padding: 1;
+}
+
+.p-1-2 {
+    padding: 1 2;
+}
+
+.p-1-2-0-3 {
+    padding: 1 2 0 3;
+}
+
+.pl-3 {
+    padding-left: 3;
+}
+
+.py-1 {
+    padding: 1 0;
+}
+
+.m-1 {
+    margin: 1 2;
+}
+
+.m-1-6-2-6 {
+    margin: 1 6 2 6;
+}
+
+.m-1-10-2-10 {
+    margin: 1 10 2 10;
+}
+
+.mx-1 {
+    margin: 0 1;
+}
+
+.mt-1 {
+    margin-top: 1;
+}
+
+.mb-1 {
+    margin-bottom: 1;
+}
+
+.mb-2 {
+    margin-bottom: 2;
+}
+
+.mr-1 {
+    margin-right: 1;
+}
+
+.mr-2 {
+    margin-right: 2;
+}
+
+.ml-2 {
+    margin-left: 2;
+}
+
+/* Bordas */
+.border-none {
+    border: none;
+}
+
+.border-l-primary {
+    border-left: heavy $primary;
+}
+
+.border-l-success {
+    border-left: heavy $success;
+}
+
+.border-l-accent {
+    border-left: heavy $accent;
+}
+
+.border-l-surface {
+    border-left: heavy $surface;
+}
+
+.round-panel {
+    border: round $panel;
+}
+
+.round-surface {
+    border: round $surface;
+}
+
+.round-accent {
+    border: round $accent;
+}
+
+.caution.hover:hover {
+    background-tint: $error 15%;
+    color: $error;
+}
+
+Tag {
+    color: $background;
+    padding: 0 1;
+    width: auto;
+}
+
+Horizontal > Tag {
+    margin-right: 1;
+}
+
+ModalScreen {
+    align: center middle;
+}
+
+ModalScreen > Vertical {
+    align: center middle;
+    background: $surface;
+    border: round $panel;
+    min-width: 48;
+    padding: 1 2 0 2;
+    width: auto;
+    height: auto;
+}

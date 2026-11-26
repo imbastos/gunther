@@ -36,6 +36,7 @@ class Sidebar(Widget):
 
     ITEMS = [  # noqa: RUF012
         {"label": "🏠 Página Inicial", "screen": "home", "group": "home"},
+        {"label": "🧩 ArchKata", "screen": "archkata", "group": "archkata"},
     ]
 
     def __init__(

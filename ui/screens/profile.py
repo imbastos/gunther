@@ -124,7 +124,9 @@ class ProfileScreen(Shell):
                     "[👤] Dados",
                     classes="color-muted mb-1",
                 )
-                with Vertical(classes="w-full h-auto bg-panel border-l-primary p-1-2"):
+                with Vertical(
+                    classes="w-full h-auto bg-surface border-l-primary p-1-2"
+                ):
                     yield Label(
                         f"Membro desde: {user.created_at}",
                         id="profile-created-at",
@@ -137,10 +139,12 @@ class ProfileScreen(Shell):
                     classes="w-full h-auto mb-2",
                 ):
                     yield Label(
-                        "[✏️] Editar perfil",
+                        "[✏️ ] Editar perfil",
                         classes="color-muted mb-1",
                     )
-                    with Vertical(classes="w-full h-auto bg-panel border-l-surface p-1-2"):
+                    with Vertical(
+                        classes="w-full h-auto bg-surface border-l-primary p-1-2"
+                    ):
                         yield Input(
                             value=user.name,
                             placeholder="Seu nome",
@@ -167,7 +171,8 @@ class ProfileScreen(Shell):
                             "Salvar alterações",
                             action=self._save_profile,
                             id="profile-save-btn",
-                            classes="h-3 border-none bg-success p-0-2 hover-tint-white",
+                            variant="success",
+                            classes="h-3 border-none p-0-2 hover-tint-white",
                         )
 
     def _on_photo_picked(self, path: str | None) -> None:

@@ -30,7 +30,7 @@ class ArticleCard(Widget):
         return text
 
     def compose(self):
-        with Vertical(classes="p-1-2 bg-surface hover w-full h-auto"):
+        with Vertical(classes="p-1-2 bg-surface border-l-primary hover w-full h-auto"):
             if self.highlighted:
                 yield Tag(
                     "💡 Sugestão de Leitura",

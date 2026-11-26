@@ -1,9 +1,10 @@
 import os
 from uuid import UUID
 
-from textual.containers import Horizontal, Vertical
+from textual.containers import Container, Horizontal, Vertical
 from textual.widgets import Button, Static
 
+import utils
 from core.exceptions.article import NotFoundArticleError
 from core.models import Article
 from ui.modals.quiz_modal import QuizModal
@@ -93,56 +94,37 @@ class ConceptScreen(Shell):
         button.add_class("bg-success" if completed else "bg-surface")
 
     def compose(self):
-        if not self.article:
-            with Vertical(classes="w-full h-auto bg-panel border-l-surface p-1-2 mb-1"):
-                yield Static(
-                    "Conceito não encontrado",
-                    classes="text-bold color-primary mb-1",
-                )
-                yield Static(
-                    "Selecione um conceito na barra lateral ou cadastre um novo artigo.",
-                    classes="color-muted",
-                )
-            return
-
-        article = self.article
-        area = getattr(article.area, "value", article.area)
-        status = "Publicado" if article.is_published else "Rascunho"
-        border = "border-l-success" if article.is_published else "border-l-accent"
-
-        if self.parent_article:
-            parent_id = self.parent_article.id
-            yield ActionButton(
-                f"◀ Voltar para: {self.parent_article.name}",
-                action=lambda pid=parent_id: self.router.navigate_to(
-                    "concept", article_id=pid
-                ),
-                id="concept-parent-btn",
-                classes="h-3 border-none bg-surface p-0-2 mb-1 hover-tint-white",
-            )
-
-        yield Static("[ 📖 ] Conceito", classes="color-muted mb-1")
-
-        with Vertical(classes=f"w-full h-auto bg-panel {border} p-1-2 mb-2"):
-            yield Static(
-                article.name,
-                id="concept-name",
-                classes="text-bold color-primary mb-1",
-            )
-
-            with Horizontal(classes="w-full h-auto mb-1"):
-                for label, value in (
-                    ("Área", area),
-                    ("Slug", f"/{article.slug}"),
-                    ("Status", status),
-                    ("Ordem", article.order),
+        yield from super().compose()
+        with Container(classes="main"):
+            if not self.article:
+                with Vertical(
+                    classes="w-full h-auto bg-panel border-l-surface p-1-2 mb-1"
                 ):
                     yield Static(
-                        f"{label}: {value}",
-                        classes="color-muted mr-2",
+                        "Conceito não encontrado",
+                        classes="text-bold color-primary mb-1",
                     )
+                    yield Static(
+                        "Selecione um conceito na barra lateral ou cadastre um novo artigo.",
+                        classes="color-muted",
+                    )
+                return
 
-            yield Static(article.description, id="concept-description")
+            article = self.article
+
+            if self.parent_article:
+                parent_id = self.parent_article.id
+                yield ActionButton(
+                    f"◀ Voltar para: {self.parent_article.name}",
+                    action=lambda pid=parent_id: self.router.navigate_to(
+                        "concept", article_id=pid
+                    ),
+                    id="concept-parent-btn",
+                    classes="h-3 border-none bg-surface p-0-2 mb-1 hover-tint-white",
+                )
+
+            yield Static(article.name, classes="color-muted")
+            yield Static(article.description, id="concept-description", classes="mb-2")
 
             if article.image:
                 if os.path.isfile(article.image):
@@ -157,67 +139,69 @@ class ConceptScreen(Shell):
                         classes="color-muted mt-1",
                     )
 
-        yield ArticleSection(
-            "[ 📝 ] Introdução",
-            article.introduction,
-            widget_id="concept-introduction",
-        )
+            yield ArticleSection(
+                "[ 📝 ] Introdução",
+                article.introduction,
+                widget_id="concept-introduction",
+            )
 
-        yield ArticleSection(
-            "[ 💡 ] Explicação",
-            article.explanation,
-            widget_id="concept-explanation",
-        )
+            yield ArticleSection(
+                "[ 💡 ] Explicação",
+                article.explanation,
+                widget_id="concept-explanation",
+            )
 
-        yield ArticleSection(
-            "[ 🧪 ] Exemplos",
-            format_collection_items(
-                article.examples,
-                "Nenhum exemplo cadastrado.",
-            ),
-            border="border-l-success",
-            widget_id="concept-examples",
-        )
+            yield ArticleSection(
+                "[ 🧪 ] Exemplos",
+                format_collection_items(
+                    article.examples,
+                    "Nenhum exemplo cadastrado.",
+                ),
+                border="border-l-success",
+                widget_id="concept-examples",
+            )
 
-        yield ArticleSection(
-            "[ 🔗 ] Referências",
-            format_collection_items(
-                article.references,
-                "Nenhuma referência cadastrada.",
-            ),
-            border="border-l-surface",
-            widget_id="concept-references",
-        )
+            yield ArticleSection(
+                "[ 🔗 ] Referências",
+                format_collection_items(
+                    article.references,
+                    "Nenhuma referência cadastrada.",
+                ),
+                border="border-l-surface",
+                widget_id="concept-references",
+            )
 
-        if self.child_articles:
-            yield Static("[ 🗂️ ] Subconceitos", classes="color-muted mb-1")
+            if self.child_articles:
+                yield Static("[ 🗂️ ] Subconceitos", classes="color-muted mb-1")
 
-            with (
-                Vertical(classes="w-full h-auto bg-panel border-l-surface p-1-2 mb-2"),
-                Horizontal(classes="w-full h-auto"),
-            ):
-                for child in self.child_articles:
-                    yield ActionButton(
-                        child.name,
-                        action=lambda cid=child.id: self.router.navigate_to(
-                            "concept", article_id=cid
-                        ),
-                        id=f"concept-child-{child.id}",
-                        classes="h-3 border-none bg-surface p-0-2 mr-1 mb-1 hover-tint-white",
-                    )
+                with (
+                    Vertical(
+                        classes="w-full h-auto bg-panel border-l-surface p-1-2 mb-2"
+                    ),
+                    Horizontal(classes="w-full h-auto"),
+                ):
+                    for child in self.child_articles:
+                        yield ActionButton(
+                            child.name,
+                            action=lambda cid=child.id: self.router.navigate_to(
+                                "concept", article_id=cid
+                            ),
+                            id=f"concept-child-{child.id}",
+                            classes="h-3 border-none bg-surface p-0-2 mr-1 mb-1 hover-tint-white",
+                        )
 
-        completed = self._is_completed()
+            completed = self._is_completed()
 
-        yield ActionButton(
-            "✓ Concluído" if completed else "✓ Marcar como concluído",
-            action=self._handle_complete_toggle,
-            id="concept-complete-btn",
-            classes=(
-                "h-3 border-none "
-                f"{'bg-success' if completed else 'bg-surface'} "
-                "p-0-2 mb-2 hover-tint-white"
-            ),
-        )
+            yield ActionButton(
+                "✓ Concluído" if completed else "✓ Marcar como concluído",
+                action=self._handle_complete_toggle,
+                id="concept-complete-btn",
+                classes=(
+                    "h-3 border-none "
+                    f"{'bg-success' if completed else 'bg-surface'} "
+                    "p-0-2 mb-2 hover-tint-white"
+                ),
+            )
 
     def _handle_complete_toggle(self) -> None:
         if not self.article:
@@ -259,6 +243,7 @@ class ConceptScreen(Shell):
         self._set_completion_state(True)
 
         for streak in self.query(Streak):
-            streak.refresh_streak()
+            streak_val = utils.calculate_streak(streak=self.current_user.streak, last_activity=self.current_user.last_activity_at, now=utils.date_now())
+            streak.refresh_streak(streak=streak_val)
 
         self.app.notify("Conceito marcado como concluído!")

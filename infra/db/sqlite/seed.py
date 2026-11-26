@@ -2,7 +2,7 @@ import json
 
 import config
 import utils
-from infra.db.sqlite.dataset import articles, posts
+from infra.db.sqlite.dataset import articles, katas, posts
 from infra.db.sqlite.manager import SqliteManager
 from infra.db.sqlite.schema import initialize_database
 
@@ -45,10 +45,22 @@ def seed_database(sqlite_manager: SqliteManager) -> None:
         for post in posts
     ]
 
+    formatted_katas = [
+        {
+            "id": kata.id,
+            "name": kata.name,
+            "description": kata.description,
+            "difficulty": kata.difficulty,
+            "is_weekly": int(kata.is_weekly),
+        }
+        for kata in katas
+    ]
+
     with sqlite_manager as db:
         db.insert_many("users", [admin_user])
         db.insert_many("articles", formatted_articles)
         db.insert_many("posts", formatted_posts)
+        db.insert_many("games", formatted_katas)
 
 
 if __name__ == "__main__":

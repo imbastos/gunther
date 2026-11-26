@@ -2,14 +2,22 @@ from textual.app import App
 from textual.widgets import Input
 
 from core.models.session import Session
-from core.services import ArticleService, PostService, UserService
+from core.services import (
+    ArticleService,
+    GameService,
+    PostService,
+    UserService,
+)
 from core.services.auth import AuthService
 from core.session import SessionManager
 from ui.router import Router
 from ui.screens import (
     AdminScreen,
+    ArchKataScreen,
     ArticleScreen,
+    ChallengeScreen,
     ConceptScreen,
+    GameScreen,
     HeroScreen,
     OnboardingScreen,
     ProfileScreen,
@@ -25,9 +33,12 @@ class TextualApp(App):
 
     SCREENS = {  # noqa: RUF012
         "admin": AdminScreen,
+        "archkata": ArchKataScreen,
         "article": ArticleScreen,
         "auth": AuthScreen,
+        "challenge": ChallengeScreen,
         "concept": ConceptScreen,
+        "game": GameScreen,
         "hero": HeroScreen,
         "home": HomeScreen,
         "onboarding": OnboardingScreen,
@@ -43,6 +54,7 @@ class TextualApp(App):
         user_service: UserService,
         article_service: ArticleService | None = None,
         post_service: PostService | None = None,
+        game_service: GameService | None = None,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -53,6 +65,7 @@ class TextualApp(App):
         self.user_service = user_service
         self.article_service = article_service
         self.post_service = post_service
+        self.game_service = game_service
 
         self.use_images = True
 

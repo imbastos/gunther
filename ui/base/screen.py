@@ -4,7 +4,13 @@ from textual.screen import Screen
 
 from core.exceptions.user import UserNotFoundError
 from core.models import User
-from core.services import ArticleService, AuthService, PostService, UserService
+from core.services import (
+    ArticleService,
+    AuthService,
+    GameService,
+    PostService,
+    UserService,
+)
 from core.session import SessionManager
 
 if TYPE_CHECKING:
@@ -22,6 +28,7 @@ class BaseScreen(Screen):
         self.user_service: UserService = self.app.user_service
         self.article_service: ArticleService | None = self.app.article_service
         self.post_service: PostService | None = self.app.post_service
+        self.game_service: GameService | None = self.app.game_service
 
         self.session_manager: SessionManager = self.app.session_manager
         self.router: Router = self.app.router

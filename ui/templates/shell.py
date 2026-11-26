@@ -30,4 +30,4 @@ class Shell(BaseScreen):
             selected_article_id=self.selected_article_id,
             concepts_expanded=self.concepts_expanded,
         )
-        yield Header(streak=self.current_user.streak)
+        yield Header(streak=self.current_user.streak if self.current_user else 0)

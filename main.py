@@ -1,8 +1,13 @@
 import config
-from core.services import ArticleService, PostService, UserService
+from core.services import ArticleService, GameService, PostService, UserService
 from core.services.auth import AuthService
 from infra.db.sqlite import SqliteManager, initialize_database
-from infra.repositories.sqlite import SqliteArticleRepo, SqlitePostRepo, SqliteUserRepo
+from infra.repositories.sqlite import (
+    SqliteArticleRepo,
+    SqliteGameRepo,
+    SqlitePostRepo,
+    SqliteUserRepo,
+)
 from ui import TextualApp
 
 
@@ -15,12 +20,14 @@ def main():
     user_repo = SqliteUserRepo(sqlite=sqlite)
     article_repo = SqliteArticleRepo(sqlite=sqlite)
     post_repo = SqlitePostRepo(sqlite=sqlite)
+    game_repo = SqliteGameRepo(sqlite=sqlite)
 
     # Serviços
     user_service = UserService(user_repo=user_repo)
     auth_service = AuthService(user_service=user_service)
     article_service = ArticleService(article_repo=article_repo)
     post_service = PostService(post_repo=post_repo)
+    game_service = GameService(game_repo=game_repo)
 
     # Textual
     textual_app = TextualApp(
@@ -28,6 +35,7 @@ def main():
         user_service=user_service,
         article_service=article_service,
         post_service=post_service,
+        game_service=game_service,
     )
     textual_app.run()
 

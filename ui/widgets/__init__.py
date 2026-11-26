@@ -6,3 +6,4 @@ from .form import Form, FormField
 from .header import Header
 from .sidebar import Sidebar
 from .tag import Tag
+from .game import Diagram, Store

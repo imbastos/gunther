@@ -55,7 +55,18 @@ def initialize_database(sqlite_manager: SqliteManager):
         )
     """
 
+    create_games_table_query = """
+        CREATE TABLE IF NOT EXISTS games (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL UNIQUE,
+            description TEXT NOT NULL DEFAULT '',
+            difficulty INTEGER,
+            is_weekly INTEGER NOT NULL DEFAULT 0
+        )
+    """
+
     with sqlite_manager as db:
         db.execute(create_users_table_query)
         db.execute(create_articles_table_query)
         db.execute(create_posts_table_query)
+        db.execute(create_games_table_query)

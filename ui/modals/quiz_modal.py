@@ -18,7 +18,7 @@ class QuizModal(ModalScreen[bool]):
             Container(classes="center-container"),
             Vertical(
                 id="quiz-dialog",
-                classes="w-60 bg-surface round-panel p-1-2 h-auto",
+                classes="m-1-10-2-10 w-full bg-surface round-panel p-1-2 h-auto",
             ),
         ):
             yield Label(
@@ -36,11 +36,11 @@ class QuizModal(ModalScreen[bool]):
                     options = item.get("options", [])
                     yield Label(
                         f"{idx + 1}. {question_text}",
-                        classes="text-bold mb-1",
+                        classes="text-bold mb-1 w-full",
                     )
                     with RadioSet(id=f"quiz-question-{idx}", classes="w-full mb-1"):
                         for opt in options:
-                            yield RadioButton(str(opt))
+                            yield RadioButton(str(opt), classes="w-full text-wrap")
 
             yield Label("", id="quiz-feedback", classes="color-error mb-1")
             with Horizontal(classes="w-full h-auto"):
@@ -48,12 +48,14 @@ class QuizModal(ModalScreen[bool]):
                     "Enviar respostas",
                     action=self._submit_answers,
                     id="quiz-submit-btn",
-                    classes="h-3 border-none bg-success p-0-2 mr-1 hover-tint-white",
+                    variant="primary",
+                    classes="h-3 p-0-2 mr-1 hover-tint-white",
                 )
                 yield ActionButton(
                     "Cancelar",
                     action=lambda: self.dismiss(False),
                     id="quiz-cancel-btn",
+                    variant="primary",
                     classes="h-3 border-none bg-panel p-0-2",
                 )
 

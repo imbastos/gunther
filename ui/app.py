@@ -94,6 +94,6 @@ class TextualApp(App):
                 box.hide()
 
     def on_mount(self):
-        # self.push_screen("hero")
-        self.session_manager.start(user_id="123e4567-e89b-12d3-a456-426614174000")
-        self.push_screen("home")
+        self.push_screen("hero")
+        # self.session_manager.start(user_id="123e4567-e89b-12d3-a456-426614174000")
+        # self.push_screen("home")

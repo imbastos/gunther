@@ -212,6 +212,10 @@ Screen .main {
     grid-gutter: 2 4;
 }
 
+.gutter-grid{
+    grid-gutter: 3 8;
+}
+
 .o-3 {
     offset: 3 3;
 }
@@ -409,6 +413,10 @@ Screen .main {
 
 .border-l-surface {
     border-left: heavy $surface;
+}
+
+.round-muted {
+    border: round $foreground-muted;
 }
 
 .round-panel {

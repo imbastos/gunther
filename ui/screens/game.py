@@ -1,5 +1,6 @@
 from math import floor
 
+from textual.reactive import reactive
 from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.timer import Timer
@@ -26,13 +27,43 @@ class GameScreen(BaseScreen):
         self.game_paused = False
         self.elapsed_seconds = 0
         self._timer: Timer | None = None
+        self.multiplier = 0
+        self.money = 1000
 
     def on_mount(self) -> None:
         self._timer = self.set_interval(1.0, self._on_tick, pause=self.game_paused)
 
+    def _get_nodes(self):
+        return self.query(".diagram_node")
+
+    def _calc_multiplier(self):
+        has_client = False
+        has_server = False
+
+        CLIENT_CATEGORY = "f83e0f1e-cb44-4032-8142-76af0fb42ef5"
+        SERVER_CATEGORY = "82a48b06-4aea-4e15-bffe-c5f9863e6dfb"
+
+        for node in self._get_nodes():
+            if node.category.id == CLIENT_CATEGORY:
+                has_client = True
+            if node.category.id == SERVER_CATEGORY:
+                has_server = True
+
+        if not has_client or not has_server:
+            self.multiplier = 0
+            self.query_one("#users-indicator").update("[$error]•")
+            return 
+        self.query_one("#users-indicator").update("")
+        self.multiplier = 1
+        return 
+
     def _on_tick(self) -> None:
+        if len(self._get_nodes()) == 0:
+            return
         if self.game_paused:
             return
+        self._calc_multiplier()
+    
         self.elapsed_seconds += 1
         self.update_simulation()
 
@@ -41,9 +72,9 @@ class GameScreen(BaseScreen):
             1**3
             * (10**6 * self.elapsed_seconds**3)
             / (600**3 + self.elapsed_seconds**3)
-        )
-
+        ) * self.multiplier
         self.query_one("#users").update(str(users))
+
 
     def _set_paused(self, paused: bool) -> None:
         self.game_paused = paused
@@ -67,6 +98,6 @@ class GameScreen(BaseScreen):
 
     def compose(self):
         with Horizontal(classes="h-full"):
-            yield Diagram()
+            yield Diagram(multiplier=self.multiplier)
             yield Store()
         yield Footer()

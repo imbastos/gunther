@@ -1,11 +1,11 @@
 from ui.widgets.game.arrow import Arrow
-from ui.widgets.game.node import Node
+from ui.widgets.game.diagram_node import DiagramNode
 
 
 class Arrows:
     def __init__(
         self,
-        connections: tuple[tuple[Node, Node], ...] = (),
+        connections: tuple[tuple[DiagramNode, DiagramNode], ...] = (),
         diagram=None,
     ):
         self.diagram = diagram
@@ -17,10 +17,10 @@ class Arrows:
     #     for arrow in self.connections:
     #         yield arrow.widget
 
-    def has_connection(self, source: Node, target: Node) -> bool:
+    def has_connection(self, source: DiagramNode, target: DiagramNode) -> bool:
         return any(a.source is source and a.target is target for a in self.connections)
 
-    def add(self, source: Node, target: Node):
+    def add(self, source: DiagramNode, target: DiagramNode):
         arrow = Arrow(source, target, self.diagram)
         self.connections.append(arrow)
 

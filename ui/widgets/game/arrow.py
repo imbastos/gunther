@@ -2,11 +2,11 @@ import heapq
 
 from textual.widgets import Label
 
-from ui.widgets.game.node import Node
+from ui.widgets.game.diagram_node import DiagramNode
 
 
 class Arrow:
-    def __init__(self, source: Node, target: Node, diagram):
+    def __init__(self, source: DiagramNode, target: DiagramNode, diagram):
         self.source = source
         self.target = target
         self.diagram = diagram
@@ -37,10 +37,10 @@ class Arrow:
         base_reg = self.diagram.region
         blocked: set[tuple[int, int]] = set()
 
-        for node in self.diagram.query(Node):
-            if not node.is_mounted:
+        for diagram_node in self.diagram.query(DiagramNode):
+            if not diagram_node.is_mounted:
                 continue
-            reg = node.region
+            reg = diagram_node.region
             x0 = reg.x - base_reg.x
             y0 = reg.y - base_reg.y
             for y in range(y0, y0 + reg.height):
@@ -50,11 +50,11 @@ class Arrow:
         return blocked
 
     def _get_ports(
-        self, node: Node, blocked: set[tuple[int, int]], width: int, height: int
+        self, diagram_node: DiagramNode, blocked: set[tuple[int, int]], width: int, height: int
     ) -> list[tuple[tuple[int, int], tuple[int, int]]]:
         """Retorna pares ((x, y), (dx, dy)) das 4 saídas adjacentes ao centro das bordas."""
         base_reg = self.diagram.region
-        reg = node.region
+        reg = diagram_node.region
 
         x0 = reg.x - base_reg.x
         y0 = reg.y - base_reg.y
@@ -153,7 +153,7 @@ class Arrow:
         next_pos: tuple[int, int] | None,
         target_port_dir: tuple[int, int] | None,
     ) -> str:
-        # Ponta final apontando para dentro do Node de destino
+        # Ponta final apontando para dentro do DiagramNode de destino
         if next_pos is None:
             # target_port_dir aponta para FORA do target; a ponta aponta no sentido oposto
             if target_port_dir == (1, 0):

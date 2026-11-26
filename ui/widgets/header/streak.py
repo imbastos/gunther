@@ -4,7 +4,7 @@ from textual.widgets import Static
 
 class Streak(Widget):
     def __init__(self, streak: int):
-        super().__init__(classes="p-0-1 bg-background color-muted")
+        super().__init__(classes="p-0-1 bg-background round-muted color-muted")
         self.streak = streak
 
     def _update_streak(self, streak: int):

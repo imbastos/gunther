@@ -1,4 +1,4 @@
-![Banner do projeto Gunther](docs/images/README-Banner.png)
+![Banner do projeto Gunther](README-Banner.png)
 
 <h1 align="center"> Gunther </h1>
 <a name="top"></a>
@@ -65,6 +65,12 @@ Abaixo estão listados os requisitos funcionais definidos para o sistema e seus 
 - **[textual-image](https://github.com/lnqs/textual-image):** Biblioteca para renderização de imagens diretamente no terminal.
 - **Domain-Driven Design (DDD):** Padrão arquitetural adotado na organização de pastas e isolamento de domínio.
 
+## 🏗️ Arquitetura e organização do projeto
+
+O Gunther foi desenvolvido em Python, adotando uma organização inspirada nos princípios de Domain-Driven Design (DDD) e separando as responsabilidades da aplicação em diferentes camadas.
+
+A arquitetura utiliza principalmente os padrões Repository, Service e Dependency Injection (Injeção de Dependência), buscando reduzir o acoplamento entre os componentes, facilitar a manutenção e permitir maior reutilização do código.
+
 ---
 
 ## 🚀 Como executar
@@ -104,12 +110,24 @@ Abaixo estão listados os requisitos funcionais definidos para o sistema e seus 
    python -m main
    ```
 
+## 🌱 Inicialização do banco de dados
+
+Após instalar as dependências, é necessário executar o processo de seed para popular o banco de dados com os dados iniciais necessários para o funcionamento da aplicação.
+
+Para realizar essa operação, execute o comando na raiz do projeto:
+
+```bash
+python -m infra.db.sqlite.seed
+```
+
+Esse comando executa o módulo responsável pela inicialização dos dados do banco de dados SQLite, preparando a aplicação para utilização.
+
 ## 🤝 Feedbacks e Contribuições
 
 Para feedbacks, sugestões ou dúvidas sobre o projeto, entre em contato:
 
 - 📧 E-mail: [isaac.bastos@ufrpe.br](mailto:isaac.bastos@ufrpe.br)
-- 💻 Repositório: github.com/imbastos/gunther
+- 📃 Artigo: [Link do Drive](https://drive.google.com/drive/folders/1C8hhpwnhtxMsR1KtcCoXYwbOPWlXXIxE?usp=drive_link)
 
 ## 📃 Licença
 

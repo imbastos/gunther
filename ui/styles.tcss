@@ -390,6 +390,10 @@ Screen .main {
     margin-right: 2;
 }
 
+.ml-1 {
+    margin-left: 1;
+}
+
 .ml-2 {
     margin-left: 2;
 }
@@ -431,6 +435,12 @@ Screen .main {
     border: round $accent;
 }
 
+.error{
+    background: $background;
+    background-tint: $error 10%;
+    color: $error;
+}
+
 .caution.hover:hover {
     background-tint: $error 15%;
     color: $error;
@@ -466,4 +476,11 @@ ModalScreen > Vertical {
 
 .hatch{
     hatch: right $surface;
+}
+
+.above-bar {
+    dock: bottom;
+    height: auto;
+    margin-bottom: 5;
+    layer: modal;
 }

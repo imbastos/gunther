@@ -209,7 +209,7 @@ class Arrow:
 
         goal_dir_map = {pos: direction for pos, direction in goals}
         target_port_dir = goal_dir_map.get(path[-1])
-        color = self.source.color
+        color = self.source.category.color
 
         for i, pos in enumerate(path):
             prev_pos = path[i - 1] if i > 0 else None

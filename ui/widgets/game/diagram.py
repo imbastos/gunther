@@ -3,16 +3,13 @@ from textual.events import Click
 from textual.widget import Widget
 from textual.widgets import Static
 
-from infra.nodes import NODES
 from ui.widgets.game.arrows import Arrows
 from ui.widgets.game.diagram_node import DiagramNode
 
 
 class Diagram(Widget):
     def __init__(self, multiplier):
-        super().__init__(
-            classes="hatch center h-full w-1--1", id="diagram"
-        )
+        super().__init__(classes="hatch center h-full w-1--1", id="diagram")
         self.selected_diagram_node: DiagramNode | None = None
         self.arrows = Arrows(diagram=self)
         self.multiplier = multiplier
@@ -46,22 +43,28 @@ class Diagram(Widget):
                 self.selected_diagram_node = None
 
     def compose(self):
-        self.grid = Grid(classes="grid-5 gutter-grid hatch p-4 w-1--1", id="diagram_nodes")
+        self.grid = Grid(
+            classes="grid-5 gutter-grid hatch p-4 w-1--1", id="diagram_nodes"
+        )
 
         yield self.grid
-        
-        with (
-            Horizontal(classes="h-5 bottom"),
-            Container(classes="center-container hatch absolute")
-        ):
-            with Vertical(classes="w-auto center round-surface p-0-2"):
-                yield Static("0", id="users", classes="w-full text-center")
-                with Horizontal():
-                    yield Static(f"[$foreground-muted]Usuários", classes="w-auto")
-                    yield Static("", id="users-indicator", classes="w-auto")
-            with Vertical(classes="w-auto center round-surface p-0-2"):
-                yield Static("$1000", id="money", classes="w-full text-center")
-                yield Static(f"[$foreground-muted]Dinheiro", classes="w-auto")
+
+        with Container(classes="bottom h-8 absolute"):
+            with Horizontal(classes="center-container hatch"):
+                yield Static("oi", id="requirements_missing")
+            with Horizontal(classes="center-container hatch"):
+                with Vertical(classes="w-auto center round-surface p-0-2"):
+                    yield Static("0", id="users", classes="w-full text-center")
+
+                    with Horizontal():
+                        yield Static("[$foreground-muted]Usuários", classes="w-auto")
+                        yield Static(
+                            "[$error]•", id="users-indicator", classes="ml-1 h-auto"
+                        )
+
+                with Vertical(classes="w-auto center round-surface p-0-2"):
+                    yield Static("$1000", id="money", classes="w-full text-center")
+                    yield Static("[$foreground-muted]Dinheiro", classes="w-auto")
 
     def add_to_grid(self, diagram_node: DiagramNode):
         self.grid.mount(diagram_node)

@@ -1,6 +1,5 @@
 from math import floor
 
-from textual.reactive import reactive
 from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.timer import Timer
@@ -11,6 +10,27 @@ from ui.modals.game_modal import GameModal
 from ui.modals.pause_modal import PauseModal
 from ui.widgets.game.diagram import Diagram
 from ui.widgets.game.store import Store
+
+REQUIREMENTS = [
+    {
+        "name": "client_required",
+        "message": "É obrigatório ter pelo menos um cliente",
+        "multiplier": 0,
+        "verify": lambda nodes: any(node.category.id == "client" for node in nodes),
+    },
+    {
+        "name": "redis_required",
+        "message": "É obrigatório ter pelo menos um banco cache",
+        "multiplier": 0.8,
+        "verify": lambda nodes: any(node.category.id == "client" for node in nodes),
+    },
+    {
+        "name": "server_required",
+        "message": "É obrigatório ter pelo menos um servidor",
+        "multiplier": 0,
+        "verify": lambda nodes: any(node.category.id == "compute" for node in nodes),
+    },
+]
 
 
 class GameScreen(BaseScreen):
@@ -29,6 +49,7 @@ class GameScreen(BaseScreen):
         self._timer: Timer | None = None
         self.multiplier = 0
         self.money = 1000
+        self.missing_requirements = []
 
     def on_mount(self) -> None:
         self._timer = self.set_interval(1.0, self._on_tick, pause=self.game_paused)
@@ -36,45 +57,57 @@ class GameScreen(BaseScreen):
     def _get_nodes(self):
         return self.query(".diagram_node")
 
+    def _update_indicator(self):
+        if len(self.missing_requirements) > 0:
+            self.query_one("#users-indicator").display = True
+        else:
+            self.query_one("#users-indicator").display = False
+
+    def _verify_requirements(self):
+        nodes = self._get_nodes()
+        missing_requirements = []
+
+        for requirement in REQUIREMENTS:
+            if not requirement["verify"](nodes):
+                missing_requirements.append(requirement)
+
+        self.missing_requirements = missing_requirements
+
+        messages = "\n".join(
+            f"[$error]• {requirement['message']}" for requirement in missing_requirements
+        )
+
+        self.query_one("#requirements_missing").update(messages)
+
     def _calc_multiplier(self):
-        has_client = False
-        has_server = False
-
-        CLIENT_CATEGORY = "f83e0f1e-cb44-4032-8142-76af0fb42ef5"
-        SERVER_CATEGORY = "82a48b06-4aea-4e15-bffe-c5f9863e6dfb"
-
-        for node in self._get_nodes():
-            if node.category.id == CLIENT_CATEGORY:
-                has_client = True
-            if node.category.id == SERVER_CATEGORY:
-                has_server = True
-
-        if not has_client or not has_server:
-            self.multiplier = 0
-            self.query_one("#users-indicator").update("[$error]•")
-            return 
-        self.query_one("#users-indicator").update("")
-        self.multiplier = 1
-        return 
+        multiplier = 1
+        for requirement in self.missing_requirements:
+            multiplier *= requirement["multiplier"]
+        self.multiplier = multiplier
 
     def _on_tick(self) -> None:
+        self._verify_requirements()
+        self._calc_multiplier()
+        self._update_indicator()
+
         if len(self._get_nodes()) == 0:
             return
         if self.game_paused:
             return
-        self._calc_multiplier()
-    
+
         self.elapsed_seconds += 1
         self.update_simulation()
 
     def update_simulation(self):
-        users = floor(
-            1**3
-            * (10**6 * self.elapsed_seconds**3)
-            / (600**3 + self.elapsed_seconds**3)
-        ) * self.multiplier
+        users = (
+            floor(
+                1**3
+                * (10**6 * self.elapsed_seconds**3)
+                / (600**3 + self.elapsed_seconds**3)
+            )
+            * self.multiplier
+        )
         self.query_one("#users").update(str(users))
-
 
     def _set_paused(self, paused: bool) -> None:
         self.game_paused = paused

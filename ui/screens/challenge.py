@@ -34,32 +34,32 @@ class ChallengeScreen(GameScreen):
 
     def compose(self):
         yield from super().compose()
-        if self.challenge is None:
-            with Vertical(
-                classes="absolute o-2 p-1 round-surface bg-surface w-auto"
-            ):
-                yield Label("Desafio não encontrado.", classes="color-error")
-            return
+        # if self.challenge is None:
+        #     with Vertical(
+        #         classes="absolute o-2 p-1 round-surface bg-surface w-auto"
+        #     ):
+        #         yield Label("Desafio não encontrado.", classes="color-error")
+        #     return
 
-        dots = "●" * (self.challenge.difficulty or 1)
-        with Vertical(
-            id="challenge-info",
-            classes="absolute o-2 p-1 round-surface bg-surface w-auto",
-        ):
-            yield Label(
-                self.challenge.name,
-                id="challenge-name",
-                classes="text-bold color-primary mb-1",
-            )
-            with Vertical(classes="w-32"):
-                if self.challenge.description:
-                    yield Label(
-                        f"[$primary]•[$foreground-muted] {self.challenge.description}",
-                        id="challenge-description",
-                        classes="w-full mb-1",
-                    )
-                yield Label(
-                    f"Dificuldade: {dots} • {self.challenge.xp} XP",
-                    id="challenge-meta",
-                    classes="color-accent w-full",
-                )
+        # dots = "●" * (self.challenge.difficulty or 1)
+        # with Vertical(
+        #     id="challenge-info",
+        #     classes="absolute o-2 p-1 round-surface bg-surface w-auto",
+        # ):
+        #     yield Label(
+        #         self.challenge.name,
+        #         id="challenge-name",
+        #         classes="text-bold color-primary mb-1",
+        #     )
+        #     with Vertical(classes="w-32"):
+        #         if self.challenge.description:
+        #             yield Label(
+        #                 f"[$primary]•[$foreground-muted] {self.challenge.description}",
+        #                 id="challenge-description",
+        #                 classes="w-full mb-1",
+        #             )
+        #         yield Label(
+        #             f"Dificuldade: {dots} • {self.challenge.xp} XP",
+        #             id="challenge-meta",
+        #             classes="color-accent w-full",
+        #         )
